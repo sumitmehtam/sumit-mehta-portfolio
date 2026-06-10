@@ -1,6 +1,6 @@
 # Sumit Mehta Portfolio
 
-Premium personal portfolio for Sumit Mehta, built with Next.js 15, React, TypeScript, Tailwind CSS, GSAP, Framer Motion, Lenis, Three.js, shadcn-style primitives, and Lucide icons.
+Premium personal portfolio for Sumit Mehta, a Frontend Engineer × AI Automation Specialist building AI-powered products, high-performance web applications, and scalable digital experiences.
 
 ## Scripts
 

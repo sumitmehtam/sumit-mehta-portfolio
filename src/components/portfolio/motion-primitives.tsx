@@ -13,6 +13,8 @@ type MagneticButtonProps = ButtonProps & {
 };
 
 function setRipple(event: React.PointerEvent<HTMLElement>) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
   const target = event.currentTarget;
   const rect = target.getBoundingClientRect();
   target.style.setProperty("--ripple-x", `${event.clientX - rect.left}px`);
@@ -22,6 +24,13 @@ function setRipple(event: React.PointerEvent<HTMLElement>) {
 }
 
 function handleMagneticMove(event: React.MouseEvent<HTMLElement>) {
+  if (
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+    window.matchMedia("(pointer: coarse)").matches
+  ) {
+    return;
+  }
+
   const target = event.currentTarget;
   const rect = target.getBoundingClientRect();
   const x = event.clientX - rect.left - rect.width / 2;
@@ -86,6 +95,13 @@ type TiltCardProps = React.HTMLAttributes<HTMLDivElement> & {
 
 export function TiltCard({ className, children, intensity = 10, ...props }: TiltCardProps) {
   const handleMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(pointer: coarse)").matches
+    ) {
+      return;
+    }
+
     const card = event.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = (event.clientX - rect.left) / rect.width - 0.5;

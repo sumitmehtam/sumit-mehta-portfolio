@@ -1,0 +1,291 @@
+{
+  "personal": {
+    "name": "Sumit Mehta",
+    "title": "Frontend Engineer × AI Automation Specialist",
+    "tagline": "Building AI-powered products, high-performance web applications, and scalable digital experiences.",
+    "location": "India",
+    "availability": "Open for Remote Opportunities",
+    "experience": "5+ Years",
+    "workMode": "Remote"
+  },
+  "hero": {
+    "headline": [
+      "AI-powered products,",
+      "high-performance apps,",
+      "scalable experiences."
+    ],
+    "supportingCopy": "Principal-grade frontend engineering for teams that need product polish, automation depth, and measurable performance.",
+    "orbitText": "FRONTEND ENGINEER AI AUTOMATION SPECIALIST PRODUCT SYSTEMS",
+    "metrics": [
+      {
+        "value": "5+",
+        "label": "Years Experience"
+      },
+      {
+        "value": "100+",
+        "label": "Projects Shipped"
+      },
+      {
+        "value": "20+",
+        "label": "AI Automations"
+      }
+    ],
+    "systemPanels": [
+      {
+        "label": "Lead Routing",
+        "value": "<90s",
+        "detail": "AI qualification to CRM"
+      },
+      {
+        "label": "Frontend Health",
+        "value": "95+",
+        "detail": "Lighthouse-ready delivery"
+      },
+      {
+        "label": "Ops Saved",
+        "value": "40h",
+        "detail": "Automated weekly workflows"
+      }
+    ]
+  },
+  "stats": [
+    {
+      "value": 5,
+      "suffix": "+",
+      "label": "Years Experience"
+    },
+    {
+      "value": 100,
+      "suffix": "+",
+      "label": "Projects"
+    },
+    {
+      "value": 50,
+      "suffix": "+",
+      "label": "Happy Clients"
+    },
+    {
+      "value": 20,
+      "suffix": "+",
+      "label": "AI Automations"
+    }
+  ],
+  "skills": [
+    "Frontend",
+    "React",
+    "Next.js",
+    "JavaScript",
+    "TypeScript",
+    "Tailwind",
+    "GSAP",
+    "Framer Motion",
+    "WordPress",
+    "WooCommerce",
+    "Elementor",
+    "Custom Development",
+    "AI",
+    "OpenAI",
+    "n8n",
+    "Make",
+    "Automation",
+    "REST APIs"
+  ],
+  "services": [
+    {
+      "title": "Frontend Development",
+      "copy": "Responsive, fast, accessible interfaces with cinematic motion and scalable systems."
+    },
+    {
+      "title": "WordPress Development",
+      "copy": "Custom WordPress, WooCommerce, Elementor, and conversion-focused experiences."
+    },
+    {
+      "title": "AI Automation",
+      "copy": "OpenAI, n8n, Make, and API workflows that remove repetitive operations."
+    },
+    {
+      "title": "Dashboard Development",
+      "copy": "Operational tools, analytics surfaces, and internal systems built for clarity."
+    },
+    {
+      "title": "Landing Pages",
+      "copy": "Launch pages with sharp messaging, premium visuals, and measurable performance."
+    },
+    {
+      "title": "API Integration",
+      "copy": "REST API integrations that connect products, CRMs, automations, and data."
+    }
+  ],
+  "projects": [
+    {
+      "index": "01",
+      "title": "Google Cloud Migration Dashboard",
+      "category": "Cloud Operations",
+      "year": "2026",
+      "description": "A migration command center for tracking workloads, service health, cost exposure, and cutover readiness across Google Cloud environments.",
+      "stack": ["Next.js", "GCP", "BigQuery", "Tailwind", "Charts"],
+      "impact": ["42% faster cutover planning", "18 live service monitors", "Executive-ready reporting"],
+      "imagePosition": "7% 48%",
+      "accent": "blue",
+      "actions": [
+        {
+          "label": "View Case Study",
+          "href": "#contact"
+        },
+        {
+          "label": "Request Walkthrough",
+          "href": "#contact"
+        }
+      ]
+    },
+    {
+      "index": "02",
+      "title": "AI Lead Qualification System",
+      "category": "AI Automation",
+      "year": "2026",
+      "description": "An AI-assisted lead engine that scores inbound enquiries, enriches records, routes opportunities, and triggers follow-up workflows.",
+      "stack": ["OpenAI", "n8n", "Next.js", "HubSpot", "REST APIs"],
+      "impact": ["Sub-90 second routing", "3x sales response speed", "Reduced manual triage"],
+      "imagePosition": "22% 48%",
+      "accent": "cyan",
+      "actions": [
+        {
+          "label": "View Case Study",
+          "href": "#contact"
+        },
+        {
+          "label": "Automation Map",
+          "href": "#contact"
+        }
+      ]
+    },
+    {
+      "index": "03",
+      "title": "Enterprise Ticket Management",
+      "category": "SaaS Dashboard",
+      "year": "2025",
+      "description": "A role-aware support dashboard for enterprise teams with priority queues, SLA tracking, escalation logic, and audit-ready history.",
+      "stack": ["React", "TypeScript", "PostgreSQL", "Prisma", "Tailwind"],
+      "impact": ["31% faster resolution", "SLA breach prevention", "Multi-role workflows"],
+      "imagePosition": "38% 46%",
+      "accent": "violet",
+      "actions": [
+        {
+          "label": "View Case Study",
+          "href": "#contact"
+        },
+        {
+          "label": "System Notes",
+          "href": "#contact"
+        }
+      ]
+    },
+    {
+      "index": "04",
+      "title": "Healthcare Automation",
+      "category": "Workflow Automation",
+      "year": "2025",
+      "description": "A secure automation layer for appointment reminders, intake routing, patient follow-ups, and operations reporting.",
+      "stack": ["Make", "REST APIs", "Airtable", "Webhooks", "Analytics"],
+      "impact": ["60% fewer missed follow-ups", "Automated intake routing", "Cleaner operations visibility"],
+      "imagePosition": "55% 48%",
+      "accent": "blue",
+      "actions": [
+        {
+          "label": "View Case Study",
+          "href": "#contact"
+        },
+        {
+          "label": "Workflow Review",
+          "href": "#contact"
+        }
+      ]
+    },
+    {
+      "index": "05",
+      "title": "Restaurant Ordering Platform",
+      "category": "Commerce Experience",
+      "year": "2025",
+      "description": "A high-performance ordering interface with menu management, cart recovery, kitchen routing, and mobile-first checkout.",
+      "stack": ["Next.js", "Stripe", "WooCommerce", "Tailwind", "GSAP"],
+      "impact": ["Mobile-first checkout", "Faster menu updates", "Higher order completion"],
+      "imagePosition": "72% 48%",
+      "accent": "cyan",
+      "actions": [
+        {
+          "label": "View Case Study",
+          "href": "#contact"
+        },
+        {
+          "label": "UX Review",
+          "href": "#contact"
+        }
+      ]
+    },
+    {
+      "index": "06",
+      "title": "Dental CRM Dashboard",
+      "category": "CRM Product",
+      "year": "2024",
+      "description": "A clinic CRM dashboard for lead tracking, recall campaigns, treatment pipeline visibility, and automated patient communication.",
+      "stack": ["React", "WordPress", "REST APIs", "n8n", "CRM"],
+      "impact": ["Clear patient pipeline", "Automated recall journeys", "Campaign performance views"],
+      "imagePosition": "90% 48%",
+      "accent": "violet",
+      "actions": [
+        {
+          "label": "View Case Study",
+          "href": "#contact"
+        },
+        {
+          "label": "CRM Flow",
+          "href": "#contact"
+        }
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "range": "2019 - 2020",
+      "title": "Frontend Systems",
+      "copy": "Built fast, accessible, scalable interfaces with modern stacks and design systems."
+    },
+    {
+      "range": "2020 - 2021",
+      "title": "WordPress Commerce",
+      "copy": "Crafted custom WordPress solutions and WooCommerce experiences that convert."
+    },
+    {
+      "range": "2021 - 2023",
+      "title": "AI Automation",
+      "copy": "Designed intelligent workflows, chatbot systems, and automations that scale operations."
+    },
+    {
+      "range": "2023 - Present",
+      "title": "Performance Engineering",
+      "copy": "Optimized speed, Core Web Vitals, and architecture for exceptional performance."
+    }
+  ],
+  "testimonials": [
+    {
+      "quote": "Sumit did not just build a website. He crafted our entire digital presence. The results speak for themselves.",
+      "name": "Arjun Singh",
+      "role": "Founder, Tryo Labs"
+    },
+    {
+      "quote": "Working with Sumit was a breeze. He is fast, communicates clearly, and delivers pixel-perfect work.",
+      "name": "Neeraj Sharma",
+      "role": "Agency Owner, LayoutCraft"
+    },
+    {
+      "quote": "Our store's performance improved massively after the redesign. Sumit understands ecommerce inside out.",
+      "name": "Pooja Verma",
+      "role": "Ecommerce Manager, House of Ekam"
+    },
+    {
+      "quote": "The AI workflow he built saves our team hours every week and gives leadership cleaner reporting.",
+      "name": "Rohan Patel",
+      "role": "Operations Lead, RemoteScale"
+    }
+  ]
+}

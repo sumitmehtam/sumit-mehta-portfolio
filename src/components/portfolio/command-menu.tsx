@@ -13,7 +13,7 @@ type CommandMenuProps = {
 };
 
 const commands = [
-  { label: "View Projects", href: "#projects", icon: BriefcaseBusiness },
+  { label: "View Case Studies", href: "#projects", icon: BriefcaseBusiness },
   { label: "Explore Services", href: "#services", icon: Sparkles },
   { label: "See Skills", href: "#skills", icon: Code2 },
   { label: "Start a Project", href: "#contact", icon: Mail }

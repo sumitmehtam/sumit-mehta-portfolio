@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 type PreloaderProps = {
   onComplete: () => void;
@@ -12,8 +12,19 @@ const lines = ["SUMIT", "MEHTA"];
 export function Preloader({ onComplete }: PreloaderProps) {
   const [progress, setProgress] = useState(0);
   const [visible, setVisible] = useState(true);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
+    if (shouldReduceMotion) {
+      setProgress(100);
+      const complete = window.setTimeout(() => {
+        setVisible(false);
+        onComplete();
+      }, 120);
+
+      return () => window.clearTimeout(complete);
+    }
+
     const start = performance.now();
     const duration = 2200;
     let frame = 0;
@@ -37,7 +48,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
       window.clearTimeout(finish);
       window.clearTimeout(complete);
     };
-  }, [onComplete]);
+  }, [onComplete, shouldReduceMotion]);
 
   return (
     <AnimatePresence>

@@ -1,8 +1,9 @@
 "use client";
 
 import { FormEvent, useCallback, useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowDown,
   ArrowUp,
@@ -36,25 +37,22 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  personal,
-  projects,
-  services,
-  skills,
-  stats,
-  testimonials,
-  timeline
-} from "@/data/portfolio";
 import { useCountUp } from "@/hooks/use-count-up";
 import { useGsapAnimations } from "@/hooks/use-gsap-animations";
 import { useLenis } from "@/hooks/use-lenis";
+import { usePortfolio } from "@/hooks/use-portfolio";
 import { CommandMenu } from "@/components/portfolio/command-menu";
 import { CustomCursor } from "@/components/portfolio/custom-cursor";
 import { MagneticButton, TiltCard } from "@/components/portfolio/motion-primitives";
 import { Navbar } from "@/components/portfolio/navbar";
 import { Preloader } from "@/components/portfolio/preloader";
 import { ScrollProgress } from "@/components/portfolio/scroll-progress";
-import { ThreeField } from "@/components/portfolio/three-field";
+import type { ProjectCaseStudy, StatItem } from "@/types/portfolio";
+
+const ThreeField = dynamic(
+  () => import("@/components/portfolio/three-field").then((mod) => mod.ThreeField),
+  { ssr: false }
+);
 
 const skillIcons = [
   Atom,
@@ -106,13 +104,15 @@ function SectionHeader({
         <span />
         {eyebrow}
       </div>
-      <h2 data-text-mask>{title}</h2>
+      <h2 data-split-reveal data-text-mask>
+        {title}
+      </h2>
       {copy ? <p>{copy}</p> : null}
     </div>
   );
 }
 
-function StatCounter({ value, suffix, label }: (typeof stats)[number]) {
+function StatCounter({ value, suffix, label }: StatItem) {
   const { ref, value: count } = useCountUp(value);
 
   return (
@@ -127,6 +127,12 @@ function StatCounter({ value, suffix, label }: (typeof stats)[number]) {
 }
 
 function HeroSection() {
+  const { hero, personal } = usePortfolio();
+  const shouldReduceMotion = useReducedMotion();
+  const headline = hero.headline.join(" ");
+  const motionInitial = shouldReduceMotion ? false : { opacity: 0, y: 20 };
+  const wordInitial = shouldReduceMotion ? false : { y: "115%", filter: "blur(22px)", opacity: 0 };
+
   return (
     <section className="hero-section" id="top">
       <ThreeField />
@@ -137,22 +143,26 @@ function HeroSection() {
           <motion.div
             animate={{ opacity: 1, y: 0 }}
             className="availability-pill"
-            initial={{ opacity: 0, y: 20 }}
-            transition={{ delay: 2.85, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            initial={motionInitial}
+            transition={{
+              delay: shouldReduceMotion ? 0 : 2.4,
+              duration: shouldReduceMotion ? 0 : 0.7,
+              ease: [0.22, 1, 0.36, 1]
+            }}
           >
             <span />
-            {personal.availability}
+            {personal.title}
           </motion.div>
-          <h1 className="hero-title" aria-label="Building Digital Experiences">
-            {["BUILDING", "DIGITAL", "EXPERIENCES"].map((word, index) => (
+          <h1 className="hero-title" aria-label={headline}>
+            {hero.headline.map((word, index) => (
               <span className="hero-word" key={word}>
                 <motion.span
                   animate={{ y: 0, filter: "blur(0px)", opacity: 1 }}
                   className="word-inner"
-                  initial={{ y: "115%", filter: "blur(22px)", opacity: 0 }}
+                  initial={wordInitial}
                   transition={{
-                    delay: 2.95 + index * 0.16,
-                    duration: 1.05,
+                    delay: shouldReduceMotion ? 0 : 2.52 + index * 0.12,
+                    duration: shouldReduceMotion ? 0 : 0.9,
                     ease: [0.22, 1, 0.36, 1]
                   }}
                 >
@@ -164,19 +174,39 @@ function HeroSection() {
           <motion.p
             animate={{ opacity: 1, y: 0 }}
             className="hero-tagline"
-            initial={{ opacity: 0, y: 24 }}
-            transition={{ delay: 3.45, duration: 0.75, ease: "easeOut" }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
+            transition={{
+              delay: shouldReduceMotion ? 0 : 2.96,
+              duration: shouldReduceMotion ? 0 : 0.75,
+              ease: "easeOut"
+            }}
           >
             {personal.tagline}
+          </motion.p>
+          <motion.p
+            animate={{ opacity: 1, y: 0 }}
+            className="hero-supporting-copy"
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+            transition={{
+              delay: shouldReduceMotion ? 0 : 3.08,
+              duration: shouldReduceMotion ? 0 : 0.7,
+              ease: "easeOut"
+            }}
+          >
+            {hero.supportingCopy}
           </motion.p>
           <motion.div
             animate={{ opacity: 1, y: 0 }}
             className="hero-actions"
-            initial={{ opacity: 0, y: 22 }}
-            transition={{ delay: 3.62, duration: 0.75, ease: "easeOut" }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 22 }}
+            transition={{
+              delay: shouldReduceMotion ? 0 : 3.18,
+              duration: shouldReduceMotion ? 0 : 0.75,
+              ease: "easeOut"
+            }}
           >
             <MagneticButton href="#projects">
-              View Projects
+              View Case Studies
               <ArrowDown aria-hidden="true" data-icon="inline-end" />
             </MagneticButton>
             <MagneticButton
@@ -191,29 +221,27 @@ function HeroSection() {
           <motion.div
             animate={{ opacity: 1, y: 0 }}
             className="hero-meta"
-            initial={{ opacity: 0, y: 18 }}
-            transition={{ delay: 3.78, duration: 0.75 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+            transition={{ delay: shouldReduceMotion ? 0 : 3.32, duration: shouldReduceMotion ? 0 : 0.75 }}
           >
-            <div>
-              <span>{personal.experience}</span>
-              <p>Experience</p>
-            </div>
-            <div>
-              <span>{personal.location}</span>
-              <p>Location</p>
-            </div>
-            <div>
-              <span>Remote</span>
-              <p>Work mode</p>
-            </div>
+            {hero.metrics.map((metric) => (
+              <div key={metric.label}>
+                <span>{metric.value}</span>
+                <p>{metric.label}</p>
+              </div>
+            ))}
           </motion.div>
         </div>
         <motion.div
           animate={{ opacity: 1, x: 0, rotateY: 0 }}
           className="hero-portrait-wrap"
           data-parallax="42"
-          initial={{ opacity: 0, x: 80, rotateY: -16 }}
-          transition={{ delay: 3.22, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          initial={shouldReduceMotion ? false : { opacity: 0, x: 80, rotateY: -16 }}
+          transition={{
+            delay: shouldReduceMotion ? 0 : 2.82,
+            duration: shouldReduceMotion ? 0 : 1.2,
+            ease: [0.22, 1, 0.36, 1]
+          }}
         >
           <div className="portrait-orbit">
             <svg aria-hidden="true" className="orbit-text" viewBox="0 0 420 420">
@@ -225,7 +253,7 @@ function HeroSection() {
               </defs>
               <text>
                 <textPath href="#orbit-path" startOffset="0%">
-                  FRONTEND ENGINEER AI AUTOMATION WORDPRESS EXPERT
+                  {hero.orbitText}
                 </textPath>
               </text>
             </svg>
@@ -240,6 +268,21 @@ function HeroSection() {
               />
             </div>
           </div>
+          <div className="hero-system-card" data-cursor>
+            <div className="system-card-header">
+              <span>Automation Console</span>
+              <strong>Live</strong>
+            </div>
+            <div className="system-panel-list">
+              {hero.systemPanels.map((panel) => (
+                <div className="system-panel" key={panel.label}>
+                  <span>{panel.label}</span>
+                  <strong>{panel.value}</strong>
+                  <p>{panel.detail}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </motion.div>
       </div>
       <div className="next-section-cue" aria-hidden="true">
@@ -251,6 +294,8 @@ function HeroSection() {
 }
 
 function AboutSection() {
+  const { personal, stats } = usePortfolio();
+
   return (
     <section className="section-pad about-section" id="about">
       <div className="section-shell about-grid">
@@ -274,8 +319,8 @@ function AboutSection() {
         <div className="about-content">
           <div className="about-copy" data-reveal>
             <p>
-              Frontend Engineer, AI Automation Developer, and WordPress Expert based in India,
-              open for remote opportunities.
+              Frontend Engineer and AI Automation Specialist based in India, open for remote
+              opportunities.
             </p>
             <p>
               I help startups, agencies, and businesses build high-performance digital
@@ -308,6 +353,8 @@ function AboutSection() {
 }
 
 function SkillsSection() {
+  const { skills } = usePortfolio();
+
   return (
     <section className="section-pad skills-section" id="skills">
       <div className="section-shell">
@@ -334,6 +381,8 @@ function SkillsSection() {
 }
 
 function ServicesSection() {
+  const { services } = usePortfolio();
+
   return (
     <section className="section-pad services-section" id="services">
       <div className="section-shell">
@@ -361,66 +410,115 @@ function ServicesSection() {
   );
 }
 
+function CaseStudyCard({ project }: { project: ProjectCaseStudy }) {
+  return (
+    <TiltCard className={`project-card project-accent-${project.accent}`} intensity={5}>
+      <div className="project-media" data-cursor>
+        <div className="case-study-visual" aria-hidden="true">
+          <div className="visual-topbar">
+            <span />
+            <span />
+            <span />
+            <strong>{project.category}</strong>
+          </div>
+          <div className="visual-grid">
+            <div className="visual-panel visual-panel-large">
+              <span>{project.title}</span>
+              <strong>{project.index}</strong>
+              <div className="visual-chart">
+                {project.impact.map((impact, index) => (
+                  <i key={impact} style={{ height: `${42 + index * 18}%` }} />
+                ))}
+              </div>
+            </div>
+            <div className="visual-panel">
+              <span>Impact</span>
+              <strong>{project.impact[0]}</strong>
+            </div>
+            <div className="visual-panel">
+              <span>System</span>
+              <strong>{project.stack[0]}</strong>
+            </div>
+          </div>
+          <div className="visual-flow">
+            {project.stack.slice(0, 4).map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+        </div>
+        <div className="project-media-scan" />
+        <div className="case-study-meta">
+          <span>{project.category}</span>
+          <span>{project.year}</span>
+        </div>
+      </div>
+      <div className="project-body">
+        <div className="project-heading-row">
+          <span>{project.index}</span>
+          <small>{project.category}</small>
+        </div>
+        <h3 data-split-reveal>{project.title}</h3>
+        <p>{project.description}</p>
+        <div className="case-study-metrics" aria-label={`${project.title} impact`}>
+          {project.impact.map((impact) => (
+            <span key={impact}>{impact}</span>
+          ))}
+        </div>
+        <div className="stack-list">
+          {project.stack.map((item) => (
+            <small key={item}>{item}</small>
+          ))}
+        </div>
+        <div className="project-links">
+          {project.actions.map((action) => (
+            <a
+              href={action.href}
+              key={action.label}
+              rel={action.external ? "noreferrer" : undefined}
+              target={action.external ? "_blank" : undefined}
+            >
+              {action.label}
+              <ArrowUpRight aria-hidden="true" />
+            </a>
+          ))}
+        </div>
+      </div>
+    </TiltCard>
+  );
+}
+
 function ProjectsSection() {
+  const { projects } = usePortfolio();
+
   return (
     <section className="projects-section" data-projects-section id="projects">
       <div className="section-shell projects-heading">
         <SectionHeader
-          copy="A selection of high-impact digital products crafted with precision, performance, and purpose."
-          eyebrow="Projects"
-          title="Work That Moves Brands Forward."
+          copy="Premium case studies across cloud migration, AI qualification, operational dashboards, and conversion-focused platforms."
+          eyebrow="Case Studies"
+          title="Systems Built To Scale."
         />
       </div>
       <div className="projects-viewport">
         <div className="projects-track" data-projects-track>
           {projects.map((project) => (
-            <TiltCard className="project-card" intensity={5} key={project.title}>
-              <div className="project-media" data-cursor>
-                <Image
-                  alt={`${project.title} preview`}
-                  fill
-                  sizes="(max-width: 900px) 90vw, 720px"
-                  src="/concepts/projects-reference.png"
-                  style={{ objectFit: "cover", objectPosition: project.imagePosition }}
-                />
-                <div className="project-media-scan" />
-              </div>
-              <div className="project-body">
-                <span>{project.index}</span>
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-                <div className="stack-list">
-                  {project.stack.map((item) => (
-                    <small key={item}>{item}</small>
-                  ))}
-                </div>
-                <div className="project-links">
-                  <a href="#contact">
-                    Live Demo
-                    <ArrowUpRight aria-hidden="true" />
-                  </a>
-                  <a href="https://github.com/" rel="noreferrer" target="_blank">
-                    Github
-                    <Github aria-hidden="true" />
-                  </a>
-                </div>
-              </div>
-            </TiltCard>
+            <CaseStudyCard key={project.title} project={project} />
           ))}
         </div>
       </div>
       <div className="section-shell project-rail" aria-hidden="true">
         <div />
-        <span>01</span>
-        <span>02</span>
-        <span>03</span>
-        <span>04</span>
+        {projects.map((project) => (
+          <span key={project.index}>{project.index}</span>
+        ))}
       </div>
     </section>
   );
 }
 
 function ExperienceSection() {
+  const { timeline } = usePortfolio();
+
   return (
     <section className="section-pad experience-section" id="experience">
       <div className="section-shell experience-grid">
@@ -450,6 +548,7 @@ function ExperienceSection() {
 }
 
 function TestimonialsSection() {
+  const { testimonials } = usePortfolio();
   const marqueeItems = [...testimonials, ...testimonials];
 
   return (
@@ -476,6 +575,7 @@ function TestimonialsSection() {
 }
 
 function ContactSection() {
+  const { services } = usePortfolio();
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -527,11 +627,9 @@ function ContactSection() {
               <option disabled value="">
                 Select project type
               </option>
-              <option>Frontend Development</option>
-              <option>WordPress Development</option>
-              <option>AI Automation</option>
-              <option>Dashboard Development</option>
-              <option>API Integration</option>
+              {services.map((service) => (
+                <option key={service.title}>{service.title}</option>
+              ))}
             </select>
           </label>
           <label>
@@ -558,6 +656,8 @@ function ContactSection() {
 }
 
 function Footer() {
+  const { personal } = usePortfolio();
+
   return (
     <footer className="footer-shell">
       <div className="section-shell footer-inner">

@@ -9,8 +9,54 @@ export function useGsapAnimations(enabled = true) {
     if (!enabled || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     gsap.registerPlugin(ScrollTrigger);
+    const splitElements: Array<{ element: HTMLElement; text: string }> = [];
 
     const ctx = gsap.context(() => {
+      gsap.utils.toArray<HTMLElement>("[data-split-reveal]").forEach((element) => {
+        if (element.querySelector(".split-word")) return;
+
+        const text = element.textContent?.trim();
+        if (!text) return;
+
+        splitElements.push({ element, text });
+        element.setAttribute("aria-label", text);
+        element.textContent = "";
+
+        text.split(" ").forEach((word, index, words) => {
+          const wrapper = document.createElement("span");
+          wrapper.className = "split-word-wrap";
+
+          const inner = document.createElement("span");
+          inner.className = "split-word";
+          inner.textContent = word;
+
+          wrapper.appendChild(inner);
+          element.appendChild(wrapper);
+
+          if (index < words.length - 1) {
+            element.appendChild(document.createTextNode(" "));
+          }
+        });
+
+        gsap.fromTo(
+          element.querySelectorAll(".split-word"),
+          { yPercent: 110, rotateX: -24, opacity: 0, filter: "blur(10px)" },
+          {
+            yPercent: 0,
+            rotateX: 0,
+            opacity: 1,
+            filter: "blur(0px)",
+            duration: 0.95,
+            ease: "power4.out",
+            stagger: 0.035,
+            scrollTrigger: {
+              trigger: element,
+              start: "top 86%"
+            }
+          }
+        );
+      });
+
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
         gsap.fromTo(
           element,
@@ -106,6 +152,11 @@ export function useGsapAnimations(enabled = true) {
       }
     });
 
-    return () => ctx.revert();
+    return () => {
+      splitElements.forEach(({ element, text }) => {
+        element.textContent = text;
+      });
+      ctx.revert();
+    };
   }, [enabled]);
 }
