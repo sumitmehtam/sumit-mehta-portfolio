@@ -1,0 +1,17 @@
+Sumit Mehta
+Frontend Engineer • AI Automation Developer • WordPress Expert
+Location: India
+Availability: Open for Remote Opportunities
+Experience: 5+ Years
+
+Summary
+Building Modern Web Experiences with AI, Performance & Motion.
+
+Core Skills
+React, Next.js, JavaScript, TypeScript, Tailwind CSS, GSAP, Framer Motion,
+WordPress, WooCommerce, Elementor, Custom Development, OpenAI, n8n, Make,
+Automation, REST APIs.
+
+Services
+Frontend Development, WordPress Development, AI Automation, Dashboard
+Development, Landing Pages, API Integration.
